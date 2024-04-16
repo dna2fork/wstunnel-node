@@ -2,7 +2,6 @@ const Help = `
 -s, --server     run as server, listen on [localip:]localport
 -t, --tunnel     run as tunnel client, specify [localip:]localport:host:port
 -c, --anycert    accept any certificates
-    --http       force to use http tunnel
 
 Run websocket tunnel server or client.
  To run server: wstunnel -s 0.0.0.0:8080
@@ -42,8 +41,10 @@ function parseCommandLine() {
        i++;
     } else if (one === '-c' || one === '--anycert') {
       argv.c = true;
+    /* disable http mode
     } else if (one === '--http') {
       argv.http = true;
+    */
     } else if (one === '--uuid') {
       argv.uuid = process.argv[i+1];
     }
@@ -88,9 +89,11 @@ module.exports = (Server, Client) => {
     let client = new Client();
     let wsHostUrl = argv._[0];
 
+    /* disable http mode
     if (argv.http) {
       client.setHttpOnly(true);
     }
+    */
     client.verbose();
 
     let localHost = 'localhost',
