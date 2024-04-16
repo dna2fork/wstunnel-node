@@ -59,7 +59,6 @@ function parseCommandLine() {
 }
 
 module.exports = (Server, Client) => {
-  const argv = {};
   const argv = parseCommandLine();
 
   if (argv.s) {
