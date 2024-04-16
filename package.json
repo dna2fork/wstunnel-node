@@ -23,7 +23,6 @@
     "node": "*"
   },
   "dependencies": {
-    "phuture": "^1.0.7",
     "websocket": "^1.0.28"
   },
   "devDependencies": {
