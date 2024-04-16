@@ -28,10 +28,10 @@ Above command will ssh to "user@sshdestination" via the wstunnel server at "http
 `;
 
 function parseCommandLine() {
-  const argv = {};
+  const argv = { _: [] };
   let ok = false;
 
-  for (let i = 0; i < process.argv.length; i++) {
+  for (let i = 2; i < process.argv.length; i++) {
     const one = process.argv[i];
     if (one === '-s' || one === '--server') {
        argv.s = process.argv[i+1];
@@ -47,13 +47,15 @@ function parseCommandLine() {
     */
     } else if (one === '--uuid') {
       argv.uuid = process.argv[i+1];
+    } else {
+      argv._.push(one);
     }
   }
 
-  if (argv.s || argv.v || argv.uuid) ok = true;
+  if (argv.s || argv.t || argv.uuid) ok = true;
 
   if (!ok) {
-    console.error(help);
+    console.error(Help);
     process.exit(1);
   }
   return argv;
