@@ -23,7 +23,6 @@
     "node": "*"
   },
   "dependencies": {
-    "websocket": "^1.0.28",
     "ws": "^8.16.0"
   },
   "devDependencies": {
