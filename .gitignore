@@ -2,3 +2,6 @@
 .idea/*
 compile/*
 node_modules/
+
+local
+dist
