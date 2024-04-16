@@ -73,7 +73,7 @@ module.exports = (Server, Client) => {
       server = new Server();
     }
     server.start(argv.s, (err) =>
-      err ? console.log(` Server is listening on ${argv.s}`) : null
+      err ? null : console.log(`WStunnel Server is listening on ${argv.s}`)
     );
   } else if (argv.t || argv.uuid !== undefined) {
     // client mode
