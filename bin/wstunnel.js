@@ -75,39 +75,6 @@ module.exports = (Server, Client) => {
     let client = new Client();
     let wsHostUrl = argv._[0];
 
-    if (argv.proxy) {
-      const SocksProxyAgent = require('socks-proxy-agent');
-      const HttpProxyAgent = require('http-proxy-agent');
-      const HttpsProxyAgent = require('https-proxy-agent');
-
-      const conf = new URL(argv.proxy);
-      if (
-        ['socks4:', 'socks4a:', 'socks5:', 'socks:', 'socks5h:'].includes(
-          conf.protocol
-        )
-      ) {
-        client.setAgentMaker(
-          (c) => new SocksProxyAgent(Object.assign({}, c, conf))
-        );
-      } else if (conf.protocol === 'https:' || conf.protocol === 'http:') {
-        const p = new URL(wsHostUrl).protocol;
-        if ('wss:' === p || 'https:' === p)
-          client.setAgentMaker(
-            (c) => new HttpsProxyAgent(Object.assign({}, c, conf))
-          );
-        else if ('ws:' === p || 'http:' === p)
-          client.setAgentMaker(
-            (c) => new HttpProxyAgent(Object.assign({}, c, conf))
-          );
-        else {
-          console.log('Invalid target ' + wsHostUrl);
-          process.exit(1);
-        }
-      } else {
-        console.log('Invalid proxy ' + argv.proxy);
-        process.exit(1);
-      }
-    }
     if (argv.http) {
       client.setHttpOnly(true);
     }
