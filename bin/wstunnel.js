@@ -1,4 +1,9 @@
 const Help = `
+-s, --server     run as server, listen on [localip:]localport
+-t, --tunnel     run as tunnel client, specify [localip:]localport:host:port
+-c, --anycert    accept any certificates
+    --http       force to use http tunnel
+
 Run websocket tunnel server or client.
  To run server: wstunnel -s 0.0.0.0:8080
  To run client: wstunnel -t localport:host:port ws[s]://wshost:wsport
@@ -22,31 +27,40 @@ This allows the command to be used as ssh proxy:
 Above command will ssh to "user@sshdestination" via the wstunnel server at "https://wstserver"
 
 `;
+
+function parseCommandLine() {
+  const argv = {};
+  let ok = false;
+
+  for (let i = 0; i < process.argv.length; i++) {
+    const one = process.argv[i];
+    if (one === '-s' || one === '--server') {
+       argv.s = process.argv[i+1];
+       i++;
+    } else if (one === '-t' || one === '--tunnel') {
+       argv.t = process.argv[i+1];
+       i++;
+    } else if (one === '-c' || one === '--anycert') {
+      argv.c = true;
+    } else if (one === '--http') {
+      argv.http = true;
+    } else if (one === '--uuid') {
+      argv.uuid = process.argv[i+1];
+    }
+  }
+
+  if (argv.s || argv.v || argv.uuid) ok = true;
+
+  if (!ok) {
+    console.error(help);
+    process.exit(1);
+  }
+  return argv;
+}
+
 module.exports = (Server, Client) => {
-  const optimist = require('optimist');
-  let argv = optimist
-    .usage(Help)
-    .string('s')
-    .string('t')
-    .string('p')
-    .alias('p', 'proxy')
-    .alias('t', 'tunnel')
-    .boolean('c')
-    .boolean('http')
-    .string('uuid')
-    .alias('c', 'anycert')
-    .default('c', false)
-    .describe('s', 'run as server, listen on [localip:]localport')
-    .describe(
-      'tunnel',
-      'run as tunnel client, specify [localip:]localport:host:port'
-    )
-    .describe(
-      'proxy',
-      'connect via a http or socks proxy server in client mode '
-    )
-    .describe('c', 'accept any certificates')
-    .describe('http', 'force to use http tunnel').argv;
+  const argv = {};
+  const argv = parseCommandLine();
 
   if (argv.s) {
     let server;
@@ -99,7 +113,7 @@ module.exports = (Server, Client) => {
       localPort = toks[0];
     } else {
       console.log('Invalid tunnel option ' + argv.t);
-      console.log(optimist.help());
+      console.log(Help);
       process.exit(1);
     }
     localPort = parseInt(localPort);
@@ -111,6 +125,6 @@ module.exports = (Server, Client) => {
       });
     }
   } else {
-    console.log(optimist.help());
+    console.log(Help);
   }
 };
