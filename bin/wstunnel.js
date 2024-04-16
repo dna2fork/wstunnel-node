@@ -1,7 +1,3 @@
-const SocksProxyAgent = require('socks-proxy-agent');
-const HttpProxyAgent = require('http-proxy-agent');
-const HttpsProxyAgent = require('https-proxy-agent');
-
 const Help = `
 Run websocket tunnel server or client.
  To run server: wstunnel -s 0.0.0.0:8080
@@ -81,6 +77,10 @@ module.exports = (Server, Client) => {
       let wsHostUrl = argv._[0];
 
       if (argv.proxy) {
+        const SocksProxyAgent = require('socks-proxy-agent');
+        const HttpProxyAgent = require('http-proxy-agent');
+        const HttpsProxyAgent = require('https-proxy-agent');
+
         const conf = new URL(argv.proxy);
         if (
           ['socks4:', 'socks4a:', 'socks5:', 'socks:', 'socks5h:'].includes(
