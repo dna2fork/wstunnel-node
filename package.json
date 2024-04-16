@@ -23,11 +23,12 @@
     "node": "*"
   },
   "dependencies": {
-    "websocket": "^1.0.28"
+    "websocket": "^1.0.28",
+    "ws": "^8.16.0"
   },
   "devDependencies": {
-    "prettier": "^2.1.2",
-    "mocha": "^8.1.2"
+    "mocha": "^8.1.2",
+    "prettier": "^2.1.2"
   },
   "bin": {
     "wstunnel": "./bin/wstt.js"
