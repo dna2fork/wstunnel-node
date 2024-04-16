@@ -2,7 +2,7 @@ const { exec } = require('child_process');
 const path = require('path');
 const wst = require('../lib/wst');
 const net = require('net');
-const _log = require('lawg');
+const _log = require('./debug').log;
 const future = require('phuture');
 const assert = require('assert');
 const log = (msg) => _log(msg + '\n');
