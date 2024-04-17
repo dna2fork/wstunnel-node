@@ -124,7 +124,7 @@ On the client, first start wstunnel:
 
 Now you can just open Remote Desktop Connection and connect to `localhost`
 
-## Proxy
+## Proxy (TODO; not yet supported)
 
 When using socks proxy, ensure the host is IP address only, DNS name is not supported. For example:
 
@@ -135,7 +135,7 @@ wstunnel -t 2255:sshhost:22 --proxy socks://localhost:3111 http://wsserver
 wstunnel -t 2255:sshhost:22 --proxy socks://127.0.0.1:3111 https://wsserver
 ```
 
-## Http tunnel
+## Http tunnel (TODO; not yet supported)
 
 An http tunnel will be established if websocket connection fails. Two long live http connections are
 established for sending and receiving data.
